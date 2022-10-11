@@ -5,8 +5,8 @@ import interactionPlugin from '@fullcalendar/interaction'
 import resourceTimelinePlugin from "@fullcalendar/resource-timeline"
 import { DATA_EVENTS, createEventId } from './data-events'
 import { DATA_KEYS } from './data-keys'
-import Tippy from '@tippyjs/react';
-import 'tippy.js/dist/tippy.css'; // optional
+import tippy from 'tippy.js'
+import 'tippy.js/dist/tippy.css'
 
 interface DemoAppState {
   weekendsVisible: boolean
@@ -130,12 +130,12 @@ export default class DemoApp extends React.Component<{}, DemoAppState> {
           //   cellContent: function(arg) {
           //     return '<b>' + arg.resource?.title + '</b><br>aaa';
           //   },}]}
-          //eventContent={(arg: EventContentArg) => <h1>{arg.event.title}</h1>}
-          eventContent={(arg: EventContentArg) =>
-            <Tippy content={arg.event.title} interactive={true} interactiveBorder={20} delay={100}>
-              <h2>{arg.event.title}</h2>
-            </Tippy>
-          }
+          eventDidMount={ (info) => {
+            tippy(info.el,{
+              content: info.event.title,
+              allowHTML: true,  
+            })
+          }}
           initialEvents= {DATA_EVENTS}
             />
         </div>
